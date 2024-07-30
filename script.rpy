@@ -1,80 +1,94 @@
 ﻿# Вы можете расположить сценарий своей игры в этом файле.
 
 # Определение персонажей игры.
-define m = Character('Мафия', color="#00ff00")
-define s = Character('Убийца', color="#ff0000")
+define l = Character('Леон', color="#3c00ffe2")
 
-# Вместо использования оператора image можете просто
-# складывать все ваши файлы изображений в папку images.
-# Например, сцену bg room можно вызвать файлом "bg room.png",
-# а eileen happy — "eileen happy.webp", и тогда они появятся в игре.
+define is_draw = False
+
+init:
+    $ left2 = Position(xalign=0.2, yalign=1.0)
+    $ right2 = Position(xalign=0.8, yalign=1.0)
 
 # Игра начинается здесь:
 label start:
-
-    scene bg dark-forest
+    scene bg brawlforest
     with fade
 
-    show spiderman happy at left
+    transform fade_in:
+        alpha 0.0
+        linear 3.0 alpha 1.0
+
+    show leon happy at fade_in
+
+    l "{cps=10}Я так долго появляюсь...{/cps}"
+
+    hide leon
     with dissolve
-
-
-    s "даже в темном лесу мне весело!"
-
-# hide spiderman
-
-    s "Куда же мне пойти дальше?"
-
-    hide spiderman
+    l "Почему я растворился"
+    transform move_and_fade:
+        xpos 0
+        alpha 0
+        linear 2.0 xpos 0.40 alpha 1.0
+    show leon happy at move_and_fade
+    l "Оуууу, я появляюсь в движении!"
+    hide leon
     with dissolve
+    transform bounce:
+        ypos 0.5
+        linear 0.5 ypos 0.6
+        linear 0.5 ypos 0.5
+        repeat
 
-    show mafia angry
+    show leon happy at bounce
     with dissolve
-
-    m "Где этот паук я его убью!"
-
-    hide mafia
-    with dissolve
-
-    show spiderman happy at left 
-    with dissolve
-
-    s "о нет там мафия, мне нужно найти место для укрытия и найти как то оружие"
+    l "Ой, я прыгаю"
+    l "ЕЕЕЕЕЕЕлки палки, тепрь с паузами прыгаю"
+    # xpos, ypos, xzoom, yzoom, alpha, rotate(1-360)
+    # linear, ease, easein, easeout
 
 
 
 
 
 
-    s "наконец то я нашел место где спрятатся"
+#     $ valid_name = False
 
-    hide spiderman
-    with dissolve
+#     while not valid_name:
+#         $ name =  renpy.input('Введите имя:')
 
-    show mafia angry
-    with dissolve
+#         if name.isalpha() and len(name) <= 14:
+#             $ valid_name = True
+#         else:
+#             "Имя должно быть буквами и не превышать 14 символов!"
 
-    m "вот блин я почти догнал паука"
+#     scene bg brawlforest
+#     with fade
+#     show leon happy at left2
+#     with dissolve
 
-    menu:
-        "Остатся в лесу":
-            jump forest
+#     l "Откуда я взялся? может [name] знает?"
 
-        "Пойти в город":
-            jump city
+#     menu:
+#         "Думаю меня нарисовали...":
+#             $ is_draw = True
+#             jump label1
+#         "Или всё же скачали с интернета...":
+#             jump label1
 
-label forest:
-    "..."
+# label label1:    
+#     "В любом случае, это не так важно"
 
-    "Персонаж остался в лесу"
+#     if is_draw:
+#         "Хотя стоит задуматся..."
+    
+#     "Пора двигатся дальше"
+    
+#     play sound "metel.wav"
 
-    return
+#     l "Что за звуки?"
 
-label city:
+#     l "Нужно срочно бежать"
 
-    scene bg city2
-    with fade
+#     stop sound
 
-    "А вот и город..."
-
-    return
+#     return
